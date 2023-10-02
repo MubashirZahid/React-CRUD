@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useProductHook from "../hooks/useProductHook";
+import "./UpdateProduct.css";
 
 const UpdateProduct = () => {
   const { updateProduct } = useProductHook();
@@ -23,7 +24,7 @@ const UpdateProduct = () => {
   };
 
   return (
-    <div>
+    <div className="update-container">
       <h1>Update Product By ID</h1>
       <p>Enter Product ID to update:</p>
       <input

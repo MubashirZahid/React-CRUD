@@ -10,6 +10,8 @@ import useProductHook from "./hooks/useProductHook";
 import PostDemo from "./components/postDemo";
 import DeleteProduct from "./components/DeleteProduct";
 import UpdateProduct from "./components/UpdateProduct";
+import DebounceDemo from "./components/DebounceDemo";
+import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
   console.log("Rendering from App.jsx file");
@@ -25,16 +27,36 @@ function App() {
       <Header />
       <Banner />
       {/* <BoxContainer /> */}
-      <h3>
-        Title:
+      <h1 style={{ textAlign: "center" }}>All Products</h1>
+      <h3
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {productData.result &&
-          productData.result.map((product, i) => {
-            return <div key={i}>{product.title}</div>;
-          })}
+          productData.result.map((product, i) => (
+            <div
+              key={i}
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: "5px",
+                padding: "10px",
+                margin: "5px",
+              }}
+            >
+              {product.title}
+            </div>
+          ))}
       </h3>
+
       <PostDemo />
       <DeleteProduct />
       <UpdateProduct />
+
+      <DebounceDemo />
+
       <Footer />
 
       {/* <div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axiosInstance from "../utils/axiosInstance";
 
 const useProductHook = () => {
   const [productData, setProductData] = useState([]);
@@ -7,55 +8,64 @@ const useProductHook = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch("http://127.0.0.1:8000/products/")
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log("Data : ", data);
-        setProductData(data.data);
+    axiosInstance
+      .get("/")
+      .then((response) => {
+        setProductData(response.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
         setLoading(false);
       });
   }, []);
 
   const createPost = (formData) => {
     setLoading(true);
-    console.log("The form data ", formData);
-    fetch("http://127.0.0.1:8000/products/addNewProduct", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    })
-      .then((resp) => resp.json())
-      .then((data) => console.log("Successfully created", data))
-      .finally(() => setLoading(false));
+
+    axiosInstance
+      .post("/addNewProduct", formData)
+      .then((response) => {
+        console.log("Successfully created:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating product:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const deleteProduct = (productId) => {
     setLoading(true);
-    console.log("Deleting product with ID: ", productId);
-    fetch(`http://127.0.0.1:8000/products/deleteById/${productId}`, {
-      method: "DELETE",
-    })
-      .then((resp) => resp.json())
-      .then((data) => console.log("Successfully deleted", data))
-      .finally(() => setLoading(false));
+
+    axiosInstance
+      .delete(`/deleteById/${productId}`)
+      .then((response) => {
+        console.log("Successfully deleted:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error deleting product:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const updateProduct = (productId, updatedData) => {
     setLoading(true);
-    console.log("Updating product with ID: ", productId);
 
-    fetch(`http://127.0.0.1:8000/products/updateById/${productId}`, {
-      method: "PUT",
-      body: JSON.stringify(updatedData),
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    })
-      .then((resp) => resp.json())
-      .then((data) => console.log("Successfully updated", data))
-      .finally(() => setLoading(false));
+    axiosInstance
+      .put(`/updateById/${productId}`, updatedData)
+      .then((response) => {
+        console.log("Successfully updated:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating product:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return {
@@ -66,7 +76,6 @@ const useProductHook = () => {
     deleteProduct,
     updateProduct,
   };
-  //   return productData;
 };
 
 export default useProductHook;

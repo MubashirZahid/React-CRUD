@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useProductHook from "../hooks/useProductHook";
+import "./DeleteDemo.css";
 
 const DeleteProduct = () => {
   const { deleteProduct } = useProductHook();
@@ -8,12 +9,12 @@ const DeleteProduct = () => {
   const handleDelete = () => {
     if (productId) {
       deleteProduct(productId);
-      setProductId(""); // Clear input field after delete
+      setProductId("");
     }
   };
 
   return (
-    <div>
+    <div className="delete-container">
       <h1>Delete Product By ID</h1>
       <p>Enter Product ID to delete:</p>
       <input
