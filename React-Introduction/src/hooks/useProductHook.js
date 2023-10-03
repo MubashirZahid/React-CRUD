@@ -20,6 +20,22 @@ const useProductHook = () => {
       });
   }, []);
 
+  const signUp = (userData) => {
+    setLoading(true);
+
+    axiosInstance
+      .post("/signUp", userData) // Modify the endpoint as needed
+      .then((response) => {
+        console.log("User signed up successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error signing up:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const createPost = (formData) => {
     setLoading(true);
 
@@ -75,6 +91,7 @@ const useProductHook = () => {
     createPost,
     deleteProduct,
     updateProduct,
+    signUp,
   };
 };
 

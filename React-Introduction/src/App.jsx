@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.scss";
 import Header from "./components/header";
 import Banner from "./components/banner";
@@ -12,59 +10,33 @@ import DeleteProduct from "./components/DeleteProduct";
 import UpdateProduct from "./components/UpdateProduct";
 import DebounceDemo from "./components/DebounceDemo";
 import RegistrationForm from "./components/RegistrationForm";
+import GetAllProducts from "./components/GetAllProducts";
+import { Route, Routes } from "react-router-dom";
+import CustomHeader from "./components/CustomHeader";
+import SignUp from "./components/SignUp";
 
 function App() {
-  console.log("Rendering from App.jsx file");
-  const { productData } = useProductHook();
-  useEffect(() => {
-    if (productData) {
-      console.log("From app.jsx ", productData.result);
-    }
-  }, [productData]);
-
   return (
-    <div>
-      <Header />
+    <>
+      {/* <Header /> */}
+      <CustomHeader />
       <Banner />
-      {/* <BoxContainer /> */}
-      <h1 style={{ textAlign: "center" }}>All Products</h1>
-      <h3
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {productData.result &&
-          productData.result.map((product, i) => (
-            <div
-              key={i}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                padding: "10px",
-                margin: "5px",
-              }}
-            >
-              {product.title}
-            </div>
-          ))}
-      </h3>
-
-      <PostDemo />
-      <DeleteProduct />
-      <UpdateProduct />
-
-      <DebounceDemo />
-
+      <Routes>
+        <Route path="/" element={<GetAllProducts />} />
+        <Route path="/create" element={<PostDemo />} />
+        <Route path="/update" element={<UpdateProduct />} />
+        <Route path="/delete" element={<DeleteProduct />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/getOneById/:id" element={<DebounceDemo />} />
+        {/* <Route path="/login" element={<LoginPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route path="/user/create" element={<UserCreatePage />} />
+        <Route path="/user/edit" element={<UserCreatePage />} />
+        <Route path="*" element={<NotFoundPage />} /> */}
+      </Routes>
       <Footer />
-
-      {/* <div>
-        <h1>React Introduction</h1>
-        <p>Hello World</p>
-        <p>Some basic components</p>
-      </div> */}
-    </div>
+    </>
   );
 }
 

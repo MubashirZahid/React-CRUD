@@ -1,0 +1,6 @@
+.nav-link{
+  color:blue;
+}
+.nav-link:hover {
+  color: #FFD700; /* Yellow color on hover */
+}
